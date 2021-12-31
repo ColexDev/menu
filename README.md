@@ -10,6 +10,7 @@ j - move cursor down
 k - move cursor up
 H - select menu to the left
 L - select menu to the right
+```
 
 ## Todo
 - Make accessing the functions more user friendly
