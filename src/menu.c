@@ -7,19 +7,22 @@
 int highlight = 0;
 int selected_item = 0;
 
-int selected_window = 1;
+int selected_window = 0;
 // TODO: Figure out a better way to not use this variable
 const int num_of_windows = 2;
+#define NUM_OF_WINDOWS 2
 
+int highlights[NUM_OF_WINDOWS] = {0};
 void clear_refresh()
 {
     clear();
     refresh();
 }
 
-void draw_menu(const int arr_size, const char* arr[], WINDOW * win)
+void draw_menu(const int arr_size, const char** arr, WINDOW * win)
 {
     box(win, 0, 0);
+    int i = 0;
     for (int i = 1; i < arr_size + 1; i++) {
         if (i == highlight + 1) {
             wattron(win, A_REVERSE);
@@ -29,22 +32,32 @@ void draw_menu(const int arr_size, const char* arr[], WINDOW * win)
     }
 }
 
-void create_menu(const int arr_size, const char* arr[], WINDOW * win, int attr)
+void create_menu(const int arr_size, const char** arr, WINDOW * win, int attr)
 {
     wattron(win, COLOR_PAIR(attr));
     draw_menu(arr_size, arr, win);
     wattroff(win, COLOR_PAIR(attr));
 }
 
-void destroy_menu(const int arr_size, const char* arr[], WINDOW * win, int attr)
+void destroy_menu(const int arr_size, const char** arr, WINDOW * win, int attr)
 {
     wattroff(win, COLOR_PAIR(attr));
     draw_menu(arr_size, arr, win);
 }
 
-void menu_init(const int arr_size, const char* arr[], int* highlights, WINDOW * win, int attr)
+void menu_init(const int max_arr_size, const char* arr[][max_arr_size], WINDOW* windows[], int attr)
 {
-    create_menu(arr_size, arr, win, attr);
+    int selected_arr_size = 0;
+
+    WINDOW* win = windows[selected_window];
+    const char** selected_arr = arr[selected_window];
+
+    while (selected_arr[selected_arr_size] != '\0') {
+        selected_arr_size++;
+    }
+
+    create_menu(selected_arr_size, selected_arr, win, attr);
+
     switch (wgetch(win)) {
     case 'k':
         highlight--;
@@ -53,37 +66,35 @@ void menu_init(const int arr_size, const char* arr[], int* highlights, WINDOW * 
         break;
     case 'j':
         highlight++;
-        if (highlight == arr_size)
-            highlight = arr_size - 1;
+        if (highlight == selected_arr_size)
+            highlight = selected_arr_size - 1;
         break;
     case 'q':
         endwin();
-        free(highlights);
         exit(0);
         break;
     case 'o':
         selected_item = highlight;
         break;
     case 'L':
-        destroy_menu(arr_size, arr, win, attr);
+        destroy_menu(selected_arr_size, selected_arr, win, attr);
         highlights[selected_window] = highlight;
         selected_window++;
-        if (selected_window > num_of_windows) {
-            selected_window = num_of_windows;
+        if (selected_window > num_of_windows - 1) {
+            selected_window = num_of_windows - 1;
         }
         highlight = highlights[selected_window];
         break;
     case 'H':
-        destroy_menu(arr_size, arr, win, attr);
+        destroy_menu(selected_arr_size, selected_arr, win, attr);
         highlights[selected_window] = highlight;
         selected_window--;
-        if (selected_window < 1) {
-            selected_window = 1;
+        if (selected_window < 0) {
+            selected_window = 0;
         }
         highlight = highlights[selected_window];
         break;
     }
-
     wrefresh(win);
 }
 
