@@ -25,8 +25,8 @@ int main()
 
     // const char* arr[2] = {"Test1", "Test2"};
     const char* arr[NUM_OF_WINDOWS][ARR_SIZE] = {
-        {"test1", "test2", "test3", '\0'},
-        {"test4", "test5", '\0'}
+        {"test1", "test2", "test3", NULL},
+        {"test4", "test5", NULL}
     };
 
     WINDOW* windows[NUM_OF_WINDOWS] = {
@@ -35,7 +35,7 @@ int main()
     };
 
     while (1) {
-        menu_init(3, arr, windows, 1);
+        menu_init(NUM_OF_WINDOWS, ARR_SIZE, arr, windows, 1);
     }
     endwin();
 }

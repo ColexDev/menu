@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stddef.h>
 
 #include <ncurses.h>
 
@@ -13,11 +14,6 @@ const int num_of_windows = 2;
 #define NUM_OF_WINDOWS 2
 
 int highlights[NUM_OF_WINDOWS] = {0};
-void clear_refresh()
-{
-    clear();
-    refresh();
-}
 
 void draw_menu(const int arr_size, const char** arr, WINDOW * win)
 {
@@ -45,14 +41,14 @@ void destroy_menu(const int arr_size, const char** arr, WINDOW * win, int attr)
     draw_menu(arr_size, arr, win);
 }
 
-void menu_init(const int max_arr_size, const char* arr[][max_arr_size], WINDOW* windows[], int attr)
+void menu_init(const int rows, const int max_arr_size, const char* arr[rows][max_arr_size], WINDOW* windows[], int attr)
 {
     int selected_arr_size = 0;
 
     WINDOW* win = windows[selected_window];
     const char** selected_arr = arr[selected_window];
 
-    while (selected_arr[selected_arr_size] != '\0') {
+    while (selected_arr[selected_arr_size] != NULL) {
         selected_arr_size++;
     }
 
