@@ -5,20 +5,19 @@
 
 #include <ncurses.h>
 
+#include "menu.h"
+#include "config.h"
+
 int highlight = 0;
 int selected_item = 0;
 
 int selected_window = 0;
-// TODO: Figure out a better way to not use this variable
-const int num_of_windows = 2;
-#define NUM_OF_WINDOWS 2
 
 int highlights[NUM_OF_WINDOWS] = {0};
 
 void draw_menu(const int arr_size, const char** arr, WINDOW * win)
 {
     box(win, 0, 0);
-    int i = 0;
     for (int i = 1; i < arr_size + 1; i++) {
         if (i == highlight + 1) {
             wattron(win, A_REVERSE);
@@ -41,7 +40,7 @@ void destroy_menu(const int arr_size, const char** arr, WINDOW * win, int attr)
     draw_menu(arr_size, arr, win);
 }
 
-void menu_init(const int rows, const int max_arr_size, const char* arr[rows][max_arr_size], WINDOW* windows[], int attr)
+void menu_init(const int num_of_windows, const int max_arr_size, const char* arr[num_of_windows][max_arr_size], WINDOW* windows[], int attr)
 {
     int selected_arr_size = 0;
 
@@ -76,8 +75,8 @@ void menu_init(const int rows, const int max_arr_size, const char* arr[rows][max
         destroy_menu(selected_arr_size, selected_arr, win, attr);
         highlights[selected_window] = highlight;
         selected_window++;
-        if (selected_window > num_of_windows - 1) {
-            selected_window = num_of_windows - 1;
+        if (selected_window > NUM_OF_WINDOWS - 1) {
+            selected_window = NUM_OF_WINDOWS - 1;
         }
         highlight = highlights[selected_window];
         break;
@@ -94,7 +93,7 @@ void menu_init(const int rows, const int max_arr_size, const char* arr[rows][max
     wrefresh(win);
 }
 
-WINDOW * create_window(const int height, int width, const int start_y, const int start_x, const int num_of_strings, const char* arr[])
+WINDOW * create_window(const int height, size_t width, const int start_y, const int start_x, const int num_of_strings, const char* arr[])
 {
     /* If the length of the string is larger than the requested width
     the box will adjust to fit the string inside of it */
