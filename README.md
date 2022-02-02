@@ -49,7 +49,7 @@ int main()
 }
 ```
 ### Output
-![output](https://0x0.st/oorD.png)
+![output](http://0x0.st/oHIF.png)
 
 ---
 
