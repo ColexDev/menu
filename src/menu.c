@@ -34,7 +34,7 @@ void create_menu(const int arr_size, const char** arr, WINDOW * win, int attr)
     wattroff(win, COLOR_PAIR(attr));
 }
 
-void destroy_menu(const int arr_size, const char** arr, WINDOW * win, int attr)
+void unfocus_menu(const int arr_size, const char** arr, WINDOW * win, int attr)
 {
     wattroff(win, COLOR_PAIR(attr));
     draw_menu(arr_size, arr, win);
@@ -72,7 +72,7 @@ void menu_init(const int num_of_windows, const int max_arr_size, const char* arr
         selected_item = highlight;
         break;
     case 'L':
-        destroy_menu(selected_arr_size, selected_arr, win, attr);
+        unfocus_menu(selected_arr_size, selected_arr, win, attr);
         highlights[selected_window] = highlight;
         selected_window++;
         if (selected_window > NUM_OF_WINDOWS - 1) {
@@ -81,7 +81,7 @@ void menu_init(const int num_of_windows, const int max_arr_size, const char* arr
         highlight = highlights[selected_window];
         break;
     case 'H':
-        destroy_menu(selected_arr_size, selected_arr, win, attr);
+        unfocus_menu(selected_arr_size, selected_arr, win, attr);
         highlights[selected_window] = highlight;
         selected_window--;
         if (selected_window < 0) {

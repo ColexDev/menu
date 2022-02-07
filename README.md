@@ -1,8 +1,7 @@
 # Simple ncurses Menu System (WIP)
 
 ## Features
-- Create simple menus 
-- Create child menus 
+- Create simple and sibling menus 
 
 ---
 
