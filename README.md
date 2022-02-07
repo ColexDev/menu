@@ -50,7 +50,7 @@ int main()
 ### Output
 ![output](http://0x0.st/oHIF.png)
 
-![output](http://0x0.st/oXmk.gif)
+![output](http://0x0.st/oXmd.gif)
 
 ---
 
