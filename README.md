@@ -35,9 +35,9 @@ int main()
 
     /* This creates the menus/windows with the text above */
     WINDOW* windows[NUM_OF_WINDOWS] = {
-        create_window(10, 20, 1, 1, 2, arr[0]),
+        create_window(10, 20, 1, 1, 3, arr[0]),
         create_window(10, 10, 1, 21, 2, arr[1]),
-        create_window(10, 10, 1, 31, 2, arr[2])
+        create_window(10, 10, 1, 31, 4, arr[2])
     };
 
     /* This creates the actual menu */
