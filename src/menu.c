@@ -106,7 +106,6 @@ WINDOW * create_window(const int height, size_t width, const int start_y, const 
     /* Inits the new window and creates the box */
     WINDOW * new_win = newwin(height, width, start_y, start_x);
     refresh();
-    // box(new_win, 0, 0);
 
     wrefresh(new_win);
     return(new_win);
